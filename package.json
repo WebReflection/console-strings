@@ -1,0 +1,9 @@
+{
+  "name": "console-strings",
+  "version": "0.0.0",
+  "main": "index.js",
+  "keywords": ["devtools", "log", "style", "ease"],
+  "author": "Andrea Giammarchi",
+  "license": "MIT",
+  "description": "String prototype utilities for better logs"
+}
