@@ -27,24 +27,29 @@ const wrap = ($, end, ...start) => (
   `\x1b[${start.join(';')}m${String($)}\x1b[${end}m`
 );
 
-export const bold = $ => wrap($, 22, 1);
-export const light = $ => wrap($, 22, 2);
-export const italic = $ => wrap($, 23, 3);
-export const underline = $ => wrap($, 24, 4);
-export const strike = $ => wrap($, 29, 9);
-export const overline = $ => wrap($, 55, 53);
-export const reset = () => `\x1b[0m`;
+/** @typedef {(content:unknown) => string} Wrap */
+
+export const bold = /** @type {Wrap} */ content => wrap(content, 22, 1);
+export const light = /** @type {Wrap} */ content => wrap(content, 22, 2);
+export const italic = /** @type {Wrap} */ content => wrap(content, 23, 3);
+export const underline = /** @type {Wrap} */ content => wrap(content, 24, 4);
+export const strike = /** @type {Wrap} */ content => wrap(content, 29, 9);
+export const overline = /** @type {Wrap} */ content => wrap(content, 55, 53);
+export const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
+
+/** @typedef {(content:unknown, color: number) => string} WrapColor */
+/** @typedef {(content:unknown, R: number, G: number, B: number) => string} WrapColor */
 
 const color = i => {
   const lower = i - 9;
   const upper = i + 51;
-  return ($, color, ...rest) => (
+  return /** @type {WrapColor} */ (content, color, ...rest) => (
     rest.length ?
-      wrap($, i, i - 1, 2, color, ...rest) :
+      wrap(content, i, i - 1, 2, color, ...rest) :
       (
         color < lower || (color > i && color < upper) ?
-          ('⚠ ' + wrap($, i, color) + reset()) :
-          wrap($, i, color)
+          ('⚠ ' + wrap(content, i, color) + reset()) :
+          wrap(content, i, color)
       )
   );
 };
