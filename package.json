@@ -2,11 +2,20 @@
   "name": "console-strings",
   "version": "0.0.1",
   "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node ./test/index.js"
+  },
   "keywords": [
     "devtools",
     "log",
     "style",
     "ease"
+  ],
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
   ],
   "author": "Andrea Giammarchi",
   "license": "MIT",

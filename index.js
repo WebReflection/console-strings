@@ -35,11 +35,19 @@ export const strike = $ => wrap($, 29, 9);
 export const overline = $ => wrap($, 55, 53);
 export const reset = () => `\x1b[0m`;
 
-const color = i => ($, color, ...rest) => (
-  rest.length ?
-    wrap($, i, i - 1, 2, color, ...rest) :
-    wrap($, i, color)
-);
+const color = i => {
+  const lower = i - 9;
+  const upper = i + 51;
+  return ($, color, ...rest) => (
+    rest.length ?
+      wrap($, i, i - 1, 2, color, ...rest) :
+      (
+        color < lower || (color > i && color < upper) ?
+          ('⚠ ' + wrap($, i, color) + reset()) :
+          wrap($, i, color)
+      )
+  );
+};
 
 export const fg = color(39);
 export const bg = color(49);
