@@ -1,83 +1,45 @@
 /** @see https://developer.chrome.com/docs/devtools/console/format-style
- * ------------------------------------------------------
- * ╔════════════╦════════════╦═════════════╦════════════╗
- * ║ Foreground ║ Background ║ Light theme ║ Dark theme ║
- * ╠════════════╬════════════╬═════════════╬════════════╣
- * ║ 30         ║ 40         ║ #000000     ║ #000000    ║
- * ║ 31         ║ 41         ║ #AA0000     ║ #ED4E4C    ║
- * ║ 32         ║ 42         ║ #00AA00     ║ #01C800    ║
- * ║ 33         ║ 43         ║ #AA5500     ║ #D2C057    ║
- * ║ 34         ║ 44         ║ #0000AA     ║ #2774F0    ║
- * ║ 35         ║ 45         ║ #AA00AA     ║ #A142F4    ║
- * ║ 36         ║ 46         ║ #00AAAA     ║ #12B5CB    ║
- * ║ 37         ║ 47         ║ #AAAAAA     ║ #CFD0D0    ║
- * ║ 90         ║ 100        ║ #555555     ║ #898989    ║
- * ║ 91         ║ 101        ║ #FF5555     ║ #F28B82    ║
- * ║ 92         ║ 102        ║ #55FF55     ║ #01C801    ║
- * ║ 93         ║ 103        ║ #FFFF55     ║ #DDFB55    ║
- * ║ 94         ║ 104        ║ #5555FF     ║ #669DF6    ║
- * ║ 95         ║ 105        ║ #FF55FF     ║ #D670D6    ║
- * ║ 96         ║ 106        ║ #55FFFF     ║ #84F0FF    ║
- * ║ 97         ║ 107        ║ #FFFFFF     ║ #FFFFFF    ║
- * ╚════════════╩════════════╩═════════════╩════════════╝
- * ------------------------------------------------------
+ * ------------------------------------------------------------------------
+ * ╔════════════════╦════════════╦════════════╦═════════════╦═════════════╗
+ * ║ Name           ║ Foreground ║ Background ║ Light theme ║ Dark theme  ║
+ * ╠════════════════╬════════════╬════════════╬═════════════╬═════════════╣
+ * ║ Black          ║ 30         ║ 40         ║ #000000     ║ #000000     ║
+ * ║ Red            ║ 31         ║ 41         ║ #AA0000     ║ #ED4E4C     ║
+ * ║ Green          ║ 32         ║ 42         ║ #00AA00     ║ #01C800     ║
+ * ║ Yellow         ║ 33         ║ 43         ║ #AA5500     ║ #D2C057     ║
+ * ║ Blue           ║ 34         ║ 44         ║ #0000AA     ║ #2774F0     ║
+ * ║ Magenta        ║ 35         ║ 45         ║ #AA00AA     ║ #A142F4     ║
+ * ║ Cyan           ║ 36         ║ 46         ║ #00AAAA     ║ #12B5CB     ║
+ * ║ White          ║ 37         ║ 47         ║ #AAAAAA     ║ #CFD0D0     ║
+ * ║ Bright Black   ║ 90         ║ 100        ║ #555555     ║ #898989     ║
+ * ║ Bright Red     ║ 91         ║ 101        ║ #FF5555     ║ #F28B82     ║
+ * ║ Bright Green   ║ 92         ║ 102        ║ #55FF55     ║ #01C801     ║
+ * ║ Bright Yellow  ║ 93         ║ 103        ║ #FFFF55     ║ #DDFB55     ║
+ * ║ Bright Blue    ║ 94         ║ 104        ║ #5555FF     ║ #669DF6     ║
+ * ║ Bright Magenta ║ 95         ║ 105        ║ #FF55FF     ║ #D670D6     ║
+ * ║ Bright Cyan    ║ 96         ║ 106        ║ #55FFFF     ║ #84F0FF     ║
+ * ║ Bright White   ║ 97         ║ 107        ║ #FFFFFF     ║ #FFFFFF     ║
+ * ╚════════════════╩════════════╩════════════╩═════════════╩═════════════╝
+ * ------------------------------------------------------------------------
  */
 
-const wrap = (self, end, ...rest) => `\x1B[${rest.join(';')}m${self}\x1B[${end}m`;
-
-Object.assign(
-  String.prototype, {
-    bold() {
-      return wrap(this, 22, 1);
-    },
-    dim() {
-      return wrap(this, 22, 2);
-    },
-    italic() {
-      return this.italics();
-    },
-    italics() {
-      return wrap(this, 23, 3);
-    },
-    underline() {
-      return wrap(this, 24, 4);
-    },
-    strike() {
-      return wrap(this, 29, 9);
-    },
-    /**
-     * @signature `string.color(name:string | number)`
-     * @param {string | number} name
-     * @return {string}
-     * 
-     * @signature `string.color(R:string | number, G:string | number, B:string | number)`
-     * @param {string | number} R
-     * @param {string | number} G
-     * @param {string | number} B
-     * @return {string}
-     */
-    color(color, ...rest) {
-      return rest.length ? wrap(this, 39, 38, 2, color, ...rest) : wrap(this, 39, color);
-    },
-    /**
-     * @signature `string.color(name)`
-     * @param {string | number} name
-     * @return {string}
-     * 
-     * @signature `string.color(R, G, B)`
-     * @param {string | number} R
-     * @param {string | number} G
-     * @param {string | number} B
-     * @return {string}
-     */
-    background(color, ...rest) {
-      return rest.length ? wrap(this, 49, 48, 2, color, ...rest) : wrap(this, 49, color);
-    },
-    overline() {
-      return wrap(this, 55, 53);
-    },
-    reset() {
-      return `${this}\x1B[0m`;
-    }
-  }
+const wrap = ($, end, ...start) => (
+  `\x1b[${start.join(';')}m${String($)}\x1b[${end}m`
 );
+
+export const bold = $ => wrap($, 22, 1);
+export const light = $ => wrap($, 22, 2);
+export const italic = $ => wrap($, 23, 3);
+export const underline = $ => wrap($, 24, 4);
+export const strike = $ => wrap($, 29, 9);
+export const overline = $ => wrap($, 55, 53);
+export const reset = () => `\x1b[0m`;
+
+const color = i => ($, color, ...rest) => (
+  rest.length ?
+    wrap($, i, i - 1, 2, color, ...rest) :
+    wrap($, i, color)
+);
+
+export const fg = color(39);
+export const bg = color(49);
