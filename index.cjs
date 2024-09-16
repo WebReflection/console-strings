@@ -1,3 +1,4 @@
+'use strict';
 /** @see https://developer.chrome.com/docs/devtools/console/format-style
  * ------------------------------------------------------------------------
  * ╔════════════════╦════════════╦════════════╦═════════════╦═════════════╗
@@ -27,13 +28,20 @@ const wrap = ($, end, ...start) => (
   `\x1b[${start.join(';')}m${String($)}\x1b[${end}m`
 );
 
-export const bold = /** @type {(content:unknown) => string} */ content => wrap(content, 22, 1);
-export const light = /** @type {(content:unknown) => string} */ content => wrap(content, 22, 2);
-export const italic = /** @type {(content:unknown) => string} */ content => wrap(content, 23, 3);
-export const underline = /** @type {(content:unknown) => string} */ content => wrap(content, 24, 4);
-export const strike = /** @type {(content:unknown) => string} */ content => wrap(content, 29, 9);
-export const overline = /** @type {(content:unknown) => string} */ content => wrap(content, 55, 53);
-export const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
+const bold = /** @type {(content:unknown) => string} */ content => wrap(content, 22, 1);
+exports.bold = bold;
+const light = /** @type {(content:unknown) => string} */ content => wrap(content, 22, 2);
+exports.light = light;
+const italic = /** @type {(content:unknown) => string} */ content => wrap(content, 23, 3);
+exports.italic = italic;
+const underline = /** @type {(content:unknown) => string} */ content => wrap(content, 24, 4);
+exports.underline = underline;
+const strike = /** @type {(content:unknown) => string} */ content => wrap(content, 29, 9);
+exports.strike = strike;
+const overline = /** @type {(content:unknown) => string} */ content => wrap(content, 55, 53);
+exports.overline = overline;
+const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
+exports.reset = reset;
 
 /**
  * @param {number} i
@@ -66,5 +74,7 @@ const color = i => {
   );
 };
 
-export const foreground = color(39);
-export const background = color(49);
+const foreground = color(39);
+exports.foreground = foreground;
+const background = color(49);
+exports.background = background;

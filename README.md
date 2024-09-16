@@ -1,5 +1,7 @@
 # console-strings
 
+A dual module that can be used via `import`, `require` or directly via `https://esm.run/console-strings`.
+
 ```js
 import {
   bold,
@@ -9,8 +11,8 @@ import {
   strike,
   overline,
   reset,
-  fg,
-  bg,
+  foreground,
+  background,
 } from 'console-strings';
 
 console.log(`

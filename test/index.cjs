@@ -1,4 +1,4 @@
-import {
+const {
   bold,
   light,
   italic,
@@ -8,7 +8,7 @@ import {
   reset,
   foreground,
   background,
-} from '../index.js';
+} = require('../index.cjs');
 
 console.log(`
   This is ${bold('bold')} text

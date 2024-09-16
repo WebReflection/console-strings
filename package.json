@@ -1,10 +1,12 @@
 {
   "name": "console-strings",
   "version": "0.0.2",
-  "main": "index.js",
+  "main": "index.cjs",
+  "module": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node ./test/index.js"
+    "build": "ascjs index.js index.cjs && npm run test",
+    "test": "node ./test/index.js && node ./test/index.cjs"
   },
   "keywords": [
     "devtools",
@@ -14,10 +16,20 @@
   ],
   "files": [
     "index.js",
+    "index.cjs",
     "LICENSE",
     "README.md"
   ],
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "default": "./index.cjs"
+    }
+  },
   "author": "Andrea Giammarchi",
   "license": "MIT",
-  "description": "String prototype utilities for better logs"
+  "description": "String prototype utilities for better logs",
+  "devDependencies": {
+    "ascjs": "^6.0.3"
+  }
 }
