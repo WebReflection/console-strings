@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "ascjs index.js index.cjs && npm run test",
-    "test": "c8 node ./test/index.js && node ./test/index.cjs"
+    "test": "c8 node ./test/index.js && node ./test/index.cjs",
+    "coverage": "mkdir -p ./coverage; c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
   "keywords": [
     "devtools",

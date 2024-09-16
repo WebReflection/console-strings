@@ -1,6 +1,6 @@
 # console-strings
 
-<sup>**Social Media Photo by [Dominik Scythe](https://unsplash.com/@drscythe) on [Unsplash](https://unsplash.com/)**</sup>
+[![Coverage Status](https://coveralls.io/repos/github/WebReflection/console-strings/badge.svg?branch=main)](https://coveralls.io/github/WebReflection/console-strings?branch=main) <sup>**Social Media Photo by [Dominik Scythe](https://unsplash.com/@drscythe) on [Unsplash](https://unsplash.com/)**</sup>
 
 
 A dual module that can be used via `import`, `require`, or directly via `https://esm.run/console-strings`, to automatically wrap `\x1b[...` escape chars around strings in a terminal or devtools compatible way.
