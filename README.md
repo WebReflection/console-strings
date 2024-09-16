@@ -52,3 +52,5 @@ Those compatible with devtools are described [in here](https://developer.chrome.
 | Bright Magenta | `95`       | `105`      | #FF55FF     | #D670D6     |
 | Bright Cyan    | `96`       | `106`      | #55FFFF     | #84F0FF     |
 | Bright White   | `97`       | `107`      | #FFFFFF     | #FFFFFF     |
+
+If a foreground value for a `background(content, value)` is passed along, or vice-versa, a `⚠` char would prefix the error without throwing while outputting.
