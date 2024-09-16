@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "ascjs index.js index.cjs && npm run test",
-    "test": "node ./test/index.js && node ./test/index.cjs"
+    "test": "c8 node ./test/index.js && node ./test/index.cjs"
   },
   "keywords": [
     "devtools",
@@ -30,6 +30,7 @@
   "license": "MIT",
   "description": "String prototype utilities for better logs",
   "devDependencies": {
-    "ascjs": "^6.0.3"
+    "ascjs": "^6.0.3",
+    "c8": "^10.1.2"
   }
 }
