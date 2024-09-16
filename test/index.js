@@ -19,5 +19,12 @@ console.log(`
   an ${overline('overline')} might not.
   Combine ${underline(bold(italic('underlined bold italic')))}
   or any other variant or add some ${foreground('color', 32)} and
-  ${background(foreground('background', 30), 42)} color too. ${reset()}
+  ${background(foreground('background', 30), 42)} color too.${reset()}
+`);
+
+console.log(`
+  Bad ${foreground('foreground', 42)} color
+  Bad ${background('background', 32)} color
+  Bad ${foreground('foreground', 102)} bright color
+  Bad ${background('background', 92)} bright color
 `);

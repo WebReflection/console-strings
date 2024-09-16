@@ -39,8 +39,10 @@ export const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
  * @param {number} i
  */
 const color = i => {
-  const lower = i - 9;
-  const upper = i + 51;
+  const range = new Set;
+  for (let lower = i - 9, upper = lower + 60, j = 0; j < 8; j++)
+    range.add(lower + j).add(upper + j);
+
   /**
    * @overload
    * @param {unknown} content
@@ -59,9 +61,9 @@ const color = i => {
     rest.length ?
       wrap(content, i, i - 1, 2, color, ...rest) :
       (
-        color < lower || (color > i && color < upper) ?
-          ('⚠ ' + wrap(content, i, color) + reset()) :
-          wrap(content, i, color)
+        range.has(color) ?
+          wrap(content, i, color) :
+          ('⚠ ' + wrap(content, i, color) + reset())
       )
   );
 };
