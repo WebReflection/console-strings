@@ -1,18 +1,18 @@
 # console-strings
 
-A dual module that can be used via `import`, `require` or directly via `https://esm.run/console-strings`.
+A dual module that can be used via `import`, `require`, or directly via `https://esm.run/console-strings`, to automatically wrap `\x1b[...` escape chars around strings in a terminal or devtools compatible way.
 
 ```js
 import {
-  bold,
-  light,
-  italic,
-  underline,
-  strike,
-  overline,
-  reset,
-  foreground,
-  background,
+  bold,       // show bold text
+  light,      // show a lighter text
+  italic,     // show italic text
+  underline,  // show underlined text
+  strike,     // show a strike-through text
+  overline,   // show an overline (not in devtools)
+  foreground, // use a specific text color
+  background, // use a specific background color
+  reset,      // reset any broken output (not needed but handy)
 } from 'console-strings';
 
 console.log(`
@@ -32,7 +32,7 @@ console.log(`
 
 ### Colors
 
-Devtools compatible with devtools are described [in here](https://developer.chrome.com/docs/devtools/console/format-style) and this is a summary:
+Those compatible with devtools are described [in here](https://developer.chrome.com/docs/devtools/console/format-style) and this is a summary:
 
 | Name           | Foreground | Background | Light theme | Dark theme  |
 | :------------- | :--------- | :--------- | :---------- | :---------- |
