@@ -96,7 +96,7 @@ const transform = args => {
   return chunks;
 };
 
-const { error: e, info: i, log: l, warn: w } = console;
+const { console: { error: e, info: i, log: l, warn: w } } = globalThis;
 
 export const error = (...args) => e(...transform(args));
 export const info = (...args) => i(...transform(args));
