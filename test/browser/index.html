@@ -1,16 +1,15 @@
-import {
-  bold,
-  light,
-  italic,
-  underline,
-  strike,
-  overline,
-  reset,
-  foreground,
-  background,
-} from '../index.js';
-
-import * as console from '../browser.js';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>console-strings</title>
+  <script type="module" src="index.js"></script>
+</head>
+<body>
+  <h1>console-strings/browser</h1>
+  <h3>Open DevTools to see the following output:</h3>
+  <pre>
 
 console.log(`
   This is ${bold('bold')} text
@@ -30,3 +29,7 @@ console.log(`
   Bad ${foreground('foreground', 102)} bright color
   Bad ${background('background', 92)} bright color
 `);
+
+  </pre>
+</body>
+</html>

@@ -36,6 +36,8 @@ console.log(`
 `);
 ```
 
+**[Live Demo](https://webreflection.github.io/console-strings/test/browser/)**
+
 ![visual example](./test/index.png)
 
 ### Colors
