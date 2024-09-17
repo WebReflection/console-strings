@@ -44,6 +44,8 @@ const closer = new Set(['22', '23', '24', '29', '39', '49', '55']);
 
 format[0] = [...closer].map(i => format[i]);
 
+closer.add('0');
+
 const color = (color, ...rgb) => (
   rgb.length ?
     `${color === '38' ? 'color' : 'background-color'}:rgb(${rgb.slice(1).join(',')})` :
@@ -54,18 +56,15 @@ const transform = args => {
   const chunks = [];
   for (const arg of args) {
     if (typeof arg === 'string') {
-      const details = [], styles = [], re = /\x1b\[([0-9;]+)m/g;
+      const details = [], re = /\x1b\[([0-9;]+)m/g;
+      const source = arg.replace(/(?<!%)%c/g, '%%c');
       let style = [], i = 0, chunk = '', match;
-      while (match = re.exec(arg)) {
+      while (match = re.exec(source)) {
         const { index, 0: { length }, 1: c } = match;
-        chunk += `${arg.slice(i, index)}%c`;
+        chunk += `${source.slice(i, index)}%c`;
         i = index + length;
-        if (c === '0') {
-          style.splice(0);
-          details.push(format[c]);
-        }
-        else if (closer.has(c)) {
-          style.pop();
+        if (closer.has(c)) {
+          c === '0' ? style.splice(0) : style.pop();
           details.push(style.concat(format[c]));
         }
         else {
@@ -75,10 +74,10 @@ const transform = args => {
           details.push(style.concat(resolved));
         }
       }
-      chunk += arg.slice(i);
       if (i) {
+        const styles = [];
         chunks.push(
-          chunk.replace(/((?:%c)+)/g, (_, c) => {
+          (chunk + source.slice(i)).replace(/((?:(?<!%)%c)+)/g, (_, c) => {
             let length = c.length / 2, group = new Map;
             while (length--) {
               for (let rules = details.shift(), i = 0; i < rules.length; i++)
