@@ -99,11 +99,11 @@ const transform = args => {
 
 const { console: { error: e, info: i, log: l, warn: w } } = globalThis;
 
-const error = (...args) => e(...transform(args));
+const error = /** @implements {console.error} */ (...args) => e(...transform(args));
 exports.error = error;
-const info = (...args) => i(...transform(args));
+const info = /** @implements {console.info} */ (...args) => i(...transform(args));
 exports.info = info;
-const log = (...args) => l(...transform(args));
+const log = /** @implements {console.log} */ (...args) => l(...transform(args));
 exports.log = log;
-const warn = (...args) => w(...transform(args));
+const warn = /** @implements {console.warn} */ (...args) => w(...transform(args));
 exports.warn = warn;

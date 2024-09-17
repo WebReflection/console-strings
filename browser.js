@@ -98,7 +98,7 @@ const transform = args => {
 
 const { console: { error: e, info: i, log: l, warn: w } } = globalThis;
 
-export const error = (...args) => e(...transform(args));
-export const info = (...args) => i(...transform(args));
-export const log = (...args) => l(...transform(args));
-export const warn = (...args) => w(...transform(args));
+export const error = /** @implements {console.error} */ (...args) => e(...transform(args));
+export const info = /** @implements {console.info} */ (...args) => i(...transform(args));
+export const log = /** @implements {console.log} */ (...args) => l(...transform(args));
+export const warn = /** @implements {console.warn} */ (...args) => w(...transform(args));
