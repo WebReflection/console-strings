@@ -1,5 +1,5 @@
 'use strict';
-const { matches } = matchMedia('(prefers-color-scheme: dark)');
+const { matches } = matchMedia('(prefers-color-scheme:dark)');
 
 const colors = {
   '30': '#000000',
