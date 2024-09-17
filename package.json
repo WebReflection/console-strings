@@ -13,7 +13,8 @@
     "devtools",
     "log",
     "style",
-    "ease"
+    "escape",
+    "terminal"
   ],
   "files": [
     "index.js",
@@ -36,7 +37,7 @@
   },
   "author": "Andrea Giammarchi",
   "license": "MIT",
-  "description": "String prototype utilities for better logs",
+  "description": "String utilities that understand terminal escape sequences",
   "devDependencies": {
     "ascjs": "^6.0.3",
     "c8": "^10.1.2"
