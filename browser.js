@@ -56,11 +56,10 @@ const transform = args => {
   for (const arg of args) {
     if (typeof arg === 'string') {
       const details = [], re = /\x1b\[([0-9;]+)m/g;
-      const source = arg.replace(/(?<!%)%c/g, '%%c');
       let style = [], i = 0, chunk = '', match;
-      while (match = re.exec(source)) {
+      while (match = re.exec(arg)) {
         const { index, 0: { length }, 1: c } = match;
-        chunk += `${source.slice(i, index)}%c`;
+        chunk += `${arg.slice(i, index)}\x1b`;
         i = index + length;
         if (closer.has(c)) {
           c === '0' ? style.splice(0) : style.pop();
@@ -76,17 +75,20 @@ const transform = args => {
       if (i) {
         const styles = [];
         chunks.push(
-          (chunk + source.slice(i)).replace(/((?:(?<!%)%c)+)/g, (_, c) => {
-            let length = c.length / 2, group = new Map;
-            while (length--) {
-              for (let rules = details.shift(), i = 0; i < rules.length; i++)
-                group.set(rules[i].split(':')[0], rules[i]);
-            }
-            styles.push([...group.values()].join(';'));
-            return '%c';
-          }),
-          ...styles
-        );
+          (chunk + arg.slice(i))
+            .replace(/(?<!%)%c/g, '%%c')
+            .replace(/((?:\x1b)+)/g, (_, c) => {
+              let { length } = c, group = new Map;
+              while (length--) {
+                for (let rules = details.shift(), i = 0; i < rules.length; i++)
+                  group.set(rules[i].split(':')[0], rules[i]);
+              }
+              styles.push([...group.values()].join(';'));
+              return '%c';
+            }),
+            ...styles
+          )
+        ;
         continue;
       }
     }
