@@ -97,11 +97,13 @@ const transform = args => {
   return chunks;
 };
 
-const error = (...args) => console.error(...transform(args));
+const { error: e, info: i, log: l, warn: w } = console;
+
+const error = (...args) => e(...transform(args));
 exports.error = error;
-const info = (...args) => console.info(...transform(args));
+const info = (...args) => i(...transform(args));
 exports.info = info;
-const log = (...args) => console.log(...transform(args));
+const log = (...args) => l(...transform(args));
 exports.log = log;
-const warn = (...args) => console.warn(...transform(args));
+const warn = (...args) => w(...transform(args));
 exports.warn = warn;

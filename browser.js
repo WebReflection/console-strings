@@ -96,7 +96,9 @@ const transform = args => {
   return chunks;
 };
 
-export const error = (...args) => console.error(...transform(args));
-export const info = (...args) => console.info(...transform(args));
-export const log = (...args) => console.log(...transform(args));
-export const warn = (...args) => console.warn(...transform(args));
+const { error: e, info: i, log: l, warn: w } = console;
+
+export const error = (...args) => e(...transform(args));
+export const info = (...args) => i(...transform(args));
+export const log = (...args) => l(...transform(args));
+export const warn = (...args) => w(...transform(args));
