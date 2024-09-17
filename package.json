@@ -18,6 +18,8 @@
   "files": [
     "index.js",
     "index.cjs",
+    "browser.js",
+    "browser.cjs",
     "LICENSE",
     "README.md"
   ],
