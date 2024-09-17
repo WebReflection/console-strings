@@ -18,6 +18,11 @@ import {
   reset,      // reset any broken output (not needed but handy)
 } from 'console-strings';
 
+// ⚠️ needed only for x-browser compatibility
+// not needed at all in Bun, NodeJS or Chrome/ium browsers
+import * as console from 'console-strings/browser';
+// exported: error, info, log, warn
+
 console.log(`
   This is ${bold('bold')} text
   while this should be ${light('light')}.
@@ -27,7 +32,7 @@ console.log(`
   an ${overline('overline')} might not.
   Combine ${underline(bold(italic('underlined bold italic')))}
   or any other variant or add some ${fg('color', 32)} and
-  ${bg(fg('background', 30), 42)} color too. ${reset()}
+  ${background(foreground('background', 30), 42)} color too. ${reset()}
 `);
 ```
 
@@ -35,7 +40,7 @@ console.log(`
 
 ### Colors
 
-Those compatible with devtools are described [in here](https://developer.chrome.com/docs/devtools/console/format-style) and this is a summary:
+All colors compatible with devtools are described [in here](https://developer.chrome.com/docs/devtools/console/format-style) and this is a summary:
 
 | Name           | Foreground | Background | Light theme | Dark theme  |
 | :------------- | :--------- | :--------- | :---------- | :---------- |
@@ -57,3 +62,5 @@ Those compatible with devtools are described [in here](https://developer.chrome.
 | Bright White   | `97`       | `107`      | #FFFFFF     | #FFFFFF     |
 
 If a foreground value for a `background(content, value)` is passed along, or vice-versa, a `⚠` char would prefix the error without throwing while outputting.
+
+The `browser` variant color is chosen after a one-off `matchMedia('(prefers-color-scheme:dark)')` check.

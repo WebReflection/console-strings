@@ -10,6 +10,8 @@ import {
   background,
 } from '../index.js';
 
+import * as console from '../browser.js';
+
 console.log(`
   This is ${bold('bold')} text
   while this should be ${light('light')}.
