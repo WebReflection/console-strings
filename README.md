@@ -8,7 +8,7 @@ A dual module that can be used via `import`, `require`, or directly via `https:/
 ```js
 import {
   bold,       // show bold text
-  light,      // show a lighter text
+  light,      // show a lighter text - alias: dim
   italic,     // show italic text
   underline,  // show underlined text
   strike,     // show a strike-through text

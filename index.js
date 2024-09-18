@@ -34,6 +34,7 @@ export const underline = /** @type {(content:unknown) => string} */ content => w
 export const strike = /** @type {(content:unknown) => string} */ content => wrap(content, 29, 9);
 export const overline = /** @type {(content:unknown) => string} */ content => wrap(content, 55, 53);
 export const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
+export const dim = light;
 
 /**
  * @param {number} i

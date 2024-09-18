@@ -21,7 +21,11 @@ console.log(`
   an ${overline('overline')} might not.
   Combine ${underline(bold(italic('underlined bold italic')))}
   or any other variant or add some ${foreground(`co${bold('l')}or`, 32)} and
-  ${background(foreground(`back${reset()}ground`, 0, 0, 0), 255, 255, 255)} color ${bold('too')}.
+  ${background(foreground(`back${bold('g')}roun${bold('d')}`, 30), 42)} color too.
+
+  Sanitization check: \x1b[6m%c\x1b[25m .
+  Sanitization check: %c${bold('OK')}%c .
+  Sanitization check: ${background(foreground(`re${reset()}se${bold('t')}`, 0, 0, 0), 255, 255, 255)} .
 `);
 
 console.log(`

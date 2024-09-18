@@ -42,6 +42,8 @@ const overline = /** @type {(content:unknown) => string} */ content => wrap(cont
 exports.overline = overline;
 const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
 exports.reset = reset;
+const dim = light;
+exports.dim = dim;
 
 /**
  * @param {number} i

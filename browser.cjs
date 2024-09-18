@@ -1,5 +1,17 @@
 'use strict';
-const { matches } = matchMedia('(prefers-color-scheme:dark)');
+const ZERO = '0';
+const X1B = '\x1b';
+const COLOR = 'color';
+const DEFAULT = 'default';
+const BG_COLOR = `background-${COLOR}`;
+const FONT_STYLE = 'font-style';
+const FONT_WEIGHT = 'font-weight';
+const TEXT_DECORATION = 'text-decoration';
+const TEXT_DECORATION_NONE = `${TEXT_DECORATION}:none`;
+
+const { entries, keys } = Object;
+
+const { matches } = matchMedia(`(prefers-${COLOR}-scheme:dark)`);
 
 const colors = {
   '30': '#000000',
@@ -20,36 +32,36 @@ const colors = {
   '97': '#FFFFFF',
 };
 
-for (const [key, value] of Object.entries(colors))
+for (const [key, value] of entries(colors))
   colors[+key + 10] = value;
 
 const format = {
-  '0': '',
-  '1': 'font-weight:bolder',
-  '2': 'font-weight:lighter',
-  '3': 'font-style:italic',
-  '4': 'text-decoration:underline',
-  '9': 'text-decoration:line-through',
-  '22': 'font-weight:default',
-  '23': 'font-style:normal',
-  '24': 'text-decoration:none',
-  '29': 'text-decoration:none',
-  '39': 'color:default',
-  '49': 'background-color:default',
-  '53': 'text-decoration:overline',
-  '55': 'text-decoration:none',
+  '1': `${FONT_WEIGHT}:bolder`,
+  '2': `${FONT_WEIGHT}:lighter`,
+  '3': `${FONT_STYLE}:italic`,
+  '4': `${TEXT_DECORATION}:underline`,
+  '9': `${TEXT_DECORATION}:line-through`,
+  '22': `${FONT_WEIGHT}:${DEFAULT}`,
+  '23': `${FONT_STYLE}:normal`,
+  '24': TEXT_DECORATION_NONE,
+  '29': TEXT_DECORATION_NONE,
+  '39': `${COLOR}:${DEFAULT}`,
+  '49': `${BG_COLOR}:${DEFAULT}`,
+  '53': `${TEXT_DECORATION}:overline`,
+  '55': TEXT_DECORATION_NONE,
 };
 
+const opener = new Set(['1', '2', '3', '4', '9', '38', '48', '53'].concat(keys(colors)));
 const closer = new Set(['22', '23', '24', '29', '39', '49', '55']);
 
-format[0] = [...closer].map(i => format[i]);
+format[ZERO] = [...closer].map(i => format[i]);
 
-closer.add('0');
+closer.add(ZERO);
 
 const color = (color, ...rgb) => (
   rgb.length ?
-    `${color === '38' ? 'color' : 'background-color'}:rgb(${rgb.slice(1).join(',')})` :
-    `${color < 38 || (color > 89 && color < 98) ? 'color' : 'background-color'}:${colors[color]}`
+    `${color == 38 ? COLOR : BG_COLOR}:rgb(${rgb.slice(1).join(',')})` :
+    `${color < 38 || (color > 89 && color < 98) ? COLOR : BG_COLOR}:${colors[color]}`
 );
 
 const transform = args => {
@@ -60,17 +72,21 @@ const transform = args => {
       let style = [], i = 0, chunk = '', match;
       while (match = re.exec(arg)) {
         const { index, 0: { length }, 1: c } = match;
-        chunk += `${arg.slice(i, index)}\x1b`;
+        chunk += arg.slice(i, index);
         i = index + length;
         if (closer.has(c)) {
-          c === '0' ? style.splice(0) : style.pop();
+          c === ZERO ? style.splice(0) : style.pop();
           details.push(style.concat(format[c]));
+          chunk += X1B;
         }
         else {
           const [k, ...rest] = c.split(';');
-          const resolved = format[k] || color(k, ...rest);
-          style.push(resolved);
-          details.push(style.concat(resolved));
+          if (opener.has(k)) {
+            const resolved = format[k] || color(+k, ...rest);
+            style.push(resolved);
+            details.push(style.concat(resolved));
+            chunk += X1B;
+          }
         }
       }
       if (i) {
@@ -81,8 +97,8 @@ const transform = args => {
             .replace(/((?:\x1b)+)/g, (_, c) => {
               let { length } = c, group = new Map;
               while (length--) {
-                for (let rules = details.shift(), i = 0; i < rules.length; i++)
-                  group.set(rules[i].split(':')[0], rules[i]);
+                for (const rule of details.shift())
+                  group.set(rule.split(':')[0], rule);
               }
               styles.push([...group.values()].join(';'));
               return '%c';
