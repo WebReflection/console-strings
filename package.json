@@ -1,11 +1,11 @@
 {
   "name": "console-strings",
   "version": "0.2.11",
-  "main": "index.cjs",
+  "main": "cjs/index.js",
   "module": "index.js",
   "type": "module",
   "scripts": {
-    "build": "ascjs index.js index.cjs && ascjs browser.js browser.cjs && ascjs --no-default md.js md.cjs && npm run test",
+    "build": "ascjs index.js cjs/index.js && ascjs browser.js cjs/browser.js && ascjs --no-default md.js cjs/md.js && npm run test",
     "test": "c8 node ./test/index.js && node ./test/index.cjs",
     "coverage": "mkdir -p ./coverage; c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
@@ -17,27 +17,25 @@
     "terminal"
   ],
   "files": [
+    "cjs/*",
     "index.js",
-    "index.cjs",
     "browser.js",
-    "browser.cjs",
     "md.js",
-    "md.cjs",
     "LICENSE",
     "README.md"
   ],
   "exports": {
     ".": {
       "import": "./index.js",
-      "default": "./index.cjs"
+      "default": "./cjs/index.js"
     },
     "./browser": {
       "import": "./browser.js",
-      "default": "./browser.cjs"
+      "default": "./cjs/browser.js"
     },
     "./md": {
       "import": "./md.js",
-      "default": "./md.cjs"
+      "default": "./cjs/md.js"
     },
     "./package.json": "./package.json"
   },

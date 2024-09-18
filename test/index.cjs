@@ -8,7 +8,7 @@ const {
   reset,
   foreground,
   background,
-} = require('../index.cjs');
+} = require('../cjs/index.js');
 
 console.log(`
   This is ${bold('bold')} text
