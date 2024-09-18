@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>console-strings</title>
+  <script type="module">
+    globalThis.console = await import('../../browser.js');
+  </script>
+  <script type="module" src="../md.js"></script>
+</head>
+<body>
+  <h1>console-strings/browser</h1>
+  <h3>Open DevTools to see the following output:</h3>
+  <pre>
+import md from 'console-strings/md';
+import { log as l } from 'console-strings/browser';
+
+const log = str => l(md(str));
+
+log(`
+  **bold**
+  __underline__
+  -dim- or --dim--
+  ~strike~ or ~~strike~~
+  *italic* or _italic_
+  **__bold underline__**
+  **_bold italic_** and ***bold italic***
+  ~**_strike bold italic_**~
+  -[-**mixed bold and _italic_**-]-
+  f#32#*fore*ground# and b#200,0,0#back**ground**#
+`);
+
+  </pre>
+</body>
+</html>

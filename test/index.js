@@ -28,3 +28,5 @@ console.log(`
   Bad ${foreground('foreground', 102)} bright color
   Bad ${background('background', 92)} bright color
 `);
+
+import('./md.js');

@@ -38,7 +38,29 @@ console.log(`
 
 **[Live Demo](https://webreflection.github.io/console-strings/test/browser/)**
 
-![visual example](./test/index.png)
+![visual terminal example](./test/index.png)
+
+## Markdown
+
+The `console-strings/md` default export converts:
+
+  * **bold** via `**double**` stars
+  * **underline** via `__double__` underlines
+  * **light** or **dim** via `-single-` or `--double--` dashes
+  * **strike** via `~single~` or `~~double~~` dashes
+  * **italic** via single `*star*` or single `_underlined_` only
+  * **foreground** via `f#32#color value#` or `f#R;G;B#rgb value#`
+  * **background** via `b#42#color value#` or `b#R;G;B#rgb value#`
+
+```js
+import md from 'console-strings/md';
+
+console.log(md('Hello **World**!'));
+```
+
+For anything more complex please see [consolemd](https://github.com/WebReflection/consolemd/tree/master#readme).
+
+**[Live Demo](https://webreflection.github.io/console-strings/test/md/)**
 
 ### Colors
 

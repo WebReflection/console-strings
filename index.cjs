@@ -71,7 +71,7 @@ const color = i => {
     rest.length ?
       wrap(content, i, i - 1, 2, color, ...rest) :
       (
-        range.has(color) ?
+        range.has(+color) ?
           wrap(content, i, color) :
           ('⚠ ' + wrap(content, i, color) + reset())
       )
