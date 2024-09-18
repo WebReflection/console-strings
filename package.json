@@ -35,6 +35,10 @@
       "import": "./browser.js",
       "default": "./browser.cjs"
     },
+    "./md": {
+      "import": "./md.js",
+      "default": "./md.cjs"
+    },
     "./package.json": "./package.json"
   },
   "author": "Andrea Giammarchi",
