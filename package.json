@@ -1,6 +1,6 @@
 {
   "name": "console-strings",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "main": "cjs/index.js",
   "module": "index.js",
   "type": "module",
