@@ -1,12 +1,15 @@
 const ZERO = '0';
 const X1B = '\x1b';
+const NONE = 'none';
 const COLOR = 'color';
+const FILTER = 'filter';
 const DEFAULT = 'default';
-const BG_COLOR = `background-${COLOR}`;
 const FONT_STYLE = 'font-style';
 const FONT_WEIGHT = 'font-weight';
+const MIX_BLEND_MODE = 'mix-blend-mode';
 const TEXT_DECORATION = 'text-decoration';
-const TEXT_DECORATION_NONE = `${TEXT_DECORATION}:none`;
+const BACKGROUND_COLOR = `background-${COLOR}`;
+const TEXT_DECORATION_NONE = `${TEXT_DECORATION}:${NONE}`;
 
 const { entries, keys } = Object;
 
@@ -39,19 +42,21 @@ const format = {
   '2': `${FONT_WEIGHT}:lighter`,
   '3': `${FONT_STYLE}:italic`,
   '4': `${TEXT_DECORATION}:underline`,
+  '7': `${FILTER}:invert(1);${MIX_BLEND_MODE}:difference`,
   '9': `${TEXT_DECORATION}:line-through`,
   '22': `${FONT_WEIGHT}:${DEFAULT}`,
   '23': `${FONT_STYLE}:normal`,
   '24': TEXT_DECORATION_NONE,
+  '27': `${FILTER}:${NONE};${MIX_BLEND_MODE}:${NONE}`,
   '29': TEXT_DECORATION_NONE,
   '39': `${COLOR}:${DEFAULT}`,
-  '49': `${BG_COLOR}:${DEFAULT}`,
+  '49': `${BACKGROUND_COLOR}:${DEFAULT}`,
   '53': `${TEXT_DECORATION}:overline`,
   '55': TEXT_DECORATION_NONE,
 };
 
-const opener = new Set(['1', '2', '3', '4', '9', '38', '48', '53'].concat(keys(colors)));
-const closer = new Set(['22', '23', '24', '29', '39', '49', '55']);
+const opener = new Set(['1', '2', '3', '4', '7', '9', '38', '48', '53'].concat(keys(colors)));
+const closer = new Set(['22', '23', '24', '27', '29', '39', '49', '55']);
 
 format[ZERO] = [...closer].map(i => format[i]);
 
@@ -59,8 +64,8 @@ closer.add(ZERO);
 
 const color = (color, ...rgb) => (
   rgb.length ?
-    `${color == 38 ? COLOR : BG_COLOR}:rgb(${rgb.slice(1).join(',')})` :
-    `${color < 38 || (color > 89 && color < 98) ? COLOR : BG_COLOR}:${colors[color]}`
+    `${color == 38 ? COLOR : BACKGROUND_COLOR}:rgb(${rgb.slice(1).join(',')})` :
+    `${color < 38 || (color > 89 && color < 98) ? COLOR : BACKGROUND_COLOR}:${colors[color]}`
 );
 
 const transform = args => {
@@ -105,6 +110,7 @@ const transform = args => {
             ...styles
           )
         ;
+        console.log(JSON.stringify(styles, null, '  '));
         continue;
       }
     }

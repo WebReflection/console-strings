@@ -4,6 +4,7 @@ import {
   italic,
   underline,
   strike,
+  invert,
   overline,
   reset,
   foreground,
@@ -19,6 +20,7 @@ console.log(`
   and so it should be ${underline('underlined')}.
   A ${strike('strike')} would work too but
   an ${overline('overline')} might not.
+  Some ${invert('inverted')} text might not show.
   Combine ${underline(bold(italic('underlined bold italic')))}
   or any other variant or add some ${foreground(`co${bold('l')}or`, 32)} and
   ${background(foreground(`back${bold('g')}roun${bold('d')}`, 30), 42)} color too.

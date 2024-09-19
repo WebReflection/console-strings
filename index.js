@@ -31,6 +31,7 @@ export const bold = /** @type {(content:unknown) => string} */ content => wrap(c
 export const light = /** @type {(content:unknown) => string} */ content => wrap(content, 22, 2);
 export const italic = /** @type {(content:unknown) => string} */ content => wrap(content, 23, 3);
 export const underline = /** @type {(content:unknown) => string} */ content => wrap(content, 24, 4);
+export const invert = /** @type {(content:unknown) => string} */ content => wrap(content, 27, 7);
 export const strike = /** @type {(content:unknown) => string} */ content => wrap(content, 29, 9);
 export const overline = /** @type {(content:unknown) => string} */ content => wrap(content, 55, 53);
 export const reset = /** @type {() => '\x1b[0m'} */ () => '\x1b[0m';
