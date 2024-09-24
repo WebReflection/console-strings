@@ -37,6 +37,7 @@ log(`
   -[-**mixed bold and _italic_**-]-
   f#32#*fore*ground# and b#200,0,0#back**ground**#
   \`some **code** as it is\`
+  \`\`\`some **other code** as it is\`\`\`
 `, `
   ${bold('bold')}
   ${underline('underline')}
@@ -49,4 +50,5 @@ log(`
   ${dim('[')}${bold(`mixed bold and ${italic('italic')}`)}${dim(']')}
   ${foreground(`${italic('fore')}ground`, 32)} and ${background(`back${bold('ground')}`, 200, 0, 0)}
   \`some **code** as it is\`
+  \`\`\`some **other code** as it is\`\`\`
 `);

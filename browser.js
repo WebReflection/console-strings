@@ -4,6 +4,7 @@ const COLOR = 'color';
 const DEFAULT = 'default';
 const BG_COLOR = `background-${COLOR}`;
 const FONT_STYLE = 'font-style';
+const FONT_FAMILY = 'font-family';
 const FONT_WEIGHT = 'font-weight';
 const TEXT_DECORATION = 'text-decoration';
 const TEXT_DECORATION_NONE = `${TEXT_DECORATION}:none`;
@@ -40,6 +41,8 @@ const format = {
   '3': `${FONT_STYLE}:italic`,
   '4': `${TEXT_DECORATION}:underline`,
   '9': `${TEXT_DECORATION}:line-through`,
+  '10': `${FONT_FAMILY}:${DEFAULT}`,
+  '11': `${FONT_FAMILY}:ui-monospace`,
   '22': `${FONT_WEIGHT}:${DEFAULT}`,
   '23': `${FONT_STYLE}:normal`,
   '24': TEXT_DECORATION_NONE,
@@ -50,12 +53,17 @@ const format = {
   '55': TEXT_DECORATION_NONE,
 };
 
-const opener = new Set(['1', '2', '3', '4', '9', '38', '48', '53'].concat(keys(colors)));
-const closer = new Set(['22', '23', '24', '29', '39', '49', '55']);
+const opener = new Set(['1', '2', '3', '4', '9', '11', '38', '48', '53'].concat(keys(colors)));
+const closer = new Set(['10', '22', '23', '24', '29', '39', '49', '55']);
 
 format[ZERO] = [...closer].map(i => format[i]);
 
 closer.add(ZERO);
+
+const code = (_, tick, content) => {
+  if (tick !== '`') tick = '';
+  return `${tick}\x1b[11m${content}\x1b[10m${tick}`;
+};
 
 const color = (color, ...rgb) => (
   rgb.length ?
@@ -65,10 +73,11 @@ const color = (color, ...rgb) => (
 
 const transform = args => {
   const chunks = [];
-  for (const arg of args) {
+  for (let arg of args) {
     if (typeof arg === 'string') {
       const details = [], re = /\x1b\[([0-9;]+)m/g;
       let style = [], i = 0, chunk = '', match;
+      arg = arg.replace(/(```|`)([\S\s]*?)\1/g, code);
       while (match = re.exec(arg)) {
         const { index, 0: { length }, 1: c } = match;
         chunk += arg.slice(i, index);
