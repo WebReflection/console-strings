@@ -8,7 +8,14 @@ import {
   background,
 } from './index.js';
 
+const code = [];
+
 const ops = [
+  [
+    /(```|`)[\S\s]*?\1/g,
+    $ => `\x1b${code.push($) - 1}`,
+  ],
+
   // cannot combine due __** issue
   [ // **bold**
     /(\*{2})(?=\S)(.*?)(\S)\1/g,
@@ -38,10 +45,16 @@ const ops = [
     /([bf])#([0-9,;]+)#(?=\S)(.*?)(\S)#/g,
     (_, $1, $2, $3, $4) => ($1 === 'b' ? background : foreground)($3 + $4, ...$2.split(/[,;]/)),
   ],
+
+  [
+    /\x1b(\d+)/g,
+    (_, $) => code[$],
+  ],
 ];
 
 export default str => {
   for (const [re, place] of ops)
     str = str.replace(re, place);
+  code.splice(0);
   return str;
 };
