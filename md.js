@@ -11,7 +11,7 @@ import {
 const code = [];
 
 const ops = [
-  [
+  [ // `single` or ```multi line``` code removal
     /(```|`)[\S\s]*?\1/g,
     $ => `\x1b${code.push($) - 1}`,
   ],
@@ -46,7 +46,7 @@ const ops = [
     (_, $1, $2, $3, $4) => ($1 === 'b' ? background : foreground)($3 + $4, ...$2.split(/[,;]/)),
   ],
 
-  [
+  [ // `single` or ```multi line``` code back
     /\x1b(\d+)/g,
     (_, $) => code[$],
   ],
